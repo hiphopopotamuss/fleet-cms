@@ -1,0 +1,40 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    environment:
+      APP_DEBUG: "1"
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: fleet_cms
+      DB_USER: fleet
+      DB_PASS: fleet
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mysql:8.0
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: fleet_cms
+      MYSQL_USER: fleet
+      MYSQL_PASSWORD: fleet
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - fleet_cms_mysql:/var/lib/mysql
+      - ./schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-ufleet", "-pfleet"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  fleet_cms_mysql:

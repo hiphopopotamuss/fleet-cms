@@ -1,0 +1,15 @@
+:root {
+    --fleet-navy: #16324f;
+}
+
+body {
+    background: #f4f6f8;
+}
+
+.app-nav {
+    background: var(--fleet-navy);
+}
+
+.card {
+    border: 0;
+}
