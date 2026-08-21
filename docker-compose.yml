@@ -10,7 +10,7 @@ services:
     environment:
       APP_DEBUG: "1"
       DB_HOST: db
-      DB_PORT: 3306
+      DB_PORT: 3308
       DB_NAME: fleet_cms
       DB_USER: fleet
       DB_PASS: fleet
@@ -21,7 +21,7 @@ services:
   db:
     image: mysql:8.0
     ports:
-      - "3307:3306"
+      - "3308:3306"
     environment:
       MYSQL_DATABASE: fleet_cms
       MYSQL_USER: fleet
